@@ -1,5 +1,6 @@
 <h2>Sign up</h2>
 <form action="/signup" method="post">
+<!-- <form> -->
     <div>
       <label for="username">Username:</label>
       <input id="username" type="text" name="username">
@@ -9,9 +10,17 @@
       <input id="password" type="password" name="password">
     </div>
     <div>
-      <input type="submit" value="Sign up">
+      <input type="submit" value="Sign up" id="submit">
     </div>
 </form>
 <p>
   <a href="/login">Login to your account &rarr;</a>
 <p>
+
+<!-- <script type="text/javascript">
+  let button = document.getElementById('submit');
+  let username = document.getElementById('username').value;
+  console.log( document.getElementById('username').value );
+  button.onclick = () => { console.log('connected user name is', username) }
+</script>
+ -->
