@@ -76,16 +76,13 @@ function(req, res) {
 // Write your authentication routes here
 /************************************************************/
 
-app.get('/login', function(req, res, next){
-  res.render('login');
-});
+// app.get('/login', function(req, res, next){
+//   res.render('login');
+// });
 
-app.get('/signup', function(req, res, next){
-  res.render('signup');
-});
-
-// app.get('/loggedout', function(req, res, next){
-//   console.log('signing up');
+// app.get('/signup', function(req, res, next){
+//   res.render('signup');
+//   console.log(req.body)
 // });
 
 /************************************************************/
