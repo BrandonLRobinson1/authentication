@@ -22,6 +22,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
+// Starting Bcrypt session ************************************
+var bcrypt = require('bcrypt-nodejs');
+
+// console.log(bcrypt, ' daddy');
+// console.log(salt, ' zaddy')
+// ************************************
 
 app.get('/', 
 function(req, res) {
@@ -80,15 +86,34 @@ app.get('/login', function(req, res, next){
   res.render('login');
 });
 
+app.post('/login', function(req, res, next){
+  res.render('test');
+});
+
 app.get('/signup', function(req, res, next){
   res.render('signup');
   // console.log(req, ' logging req in shortly js line 85')
 });
 
 app.post('/signup', function(req, res, next){
-  console.log(req.body.username, ' user');
-  console.log(req.body.password, ' password')
-  res.send('jo')
+  let username = req.body.username;
+  let password = req.body.password;
+  let salt = bcrypt.genSaltSync(10);
+  let hash = bcrypt.hashSync(password, salt);
+
+  console.log(username, ' usanameee pawpyy')
+  console.log(hash, ' hash brown daddy')
+
+  //next up is how to store this information and verify in knex and bookshelf
+
+  // console.log(Users.collection().fetch().then(function(collection) {console.log(collection)}))
+
+  // db.knex.schema.hasTable('Users').then(function(users){
+  //   console.log(users)
+  // })
+
+  Users.fetch().then(function(test){console.log(test)})
+  // res.send('jo')
 });
 
 /************************************************************/
