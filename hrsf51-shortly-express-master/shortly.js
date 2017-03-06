@@ -14,7 +14,7 @@ var Click = require('./app/models/click');
 var app = express();
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs'); 
 app.use(partials());
 // Parse JSON (uniform resource locators)
 app.use(bodyParser.json());
