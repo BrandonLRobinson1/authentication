@@ -20,4 +20,4 @@ var Link = db.Model.extend({
   }
 });
 
-module.exports = Link;
+module.exports = Link; 

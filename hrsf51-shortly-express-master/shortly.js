@@ -99,20 +99,30 @@ app.post('/signup', function(req, res, next){
   let username = req.body.username;
   let password = req.body.password;
   let salt = bcrypt.genSaltSync(10);
-  let hash = bcrypt.hashSync(password, salt);
+  let hashedPW = bcrypt.hashSync(password, salt);
 
   console.log(username, ' usanameee pawpyy')
-  console.log(hash, ' hash brown daddy')
+  console.log(hashedPW, ' hash brown daddy')
 
   //next up is how to store this information and verify in knex and bookshelf
 
-  // console.log(Users.collection().fetch().then(function(collection) {console.log(collection)}))
 
   // db.knex.schema.hasTable('Users').then(function(users){
   //   console.log(users)
+  //   if (users) {
+  //     db.knex.schema
+  //   }
   // })
 
-  Users.fetch().then(function(test){console.log(test)})
+  new User({username: username}).fetch().then(function( user ){
+    if (!user) {
+      console.log(user, ' user')
+      console.error('non existnt')
+    } else {
+      console.log('its here')
+    }
+  })
+  //.then(function(test){console.log(test)})
   // res.send('jo')
 });
 
@@ -141,5 +151,5 @@ app.get('/*', function(req, res) {
   });
 });
 
-console.log('Shortly is listening on 4568');
-app.listen(4568);
+
+app.listen(4568, () => console.log('Fire on 4568') );
