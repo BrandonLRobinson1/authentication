@@ -119,7 +119,7 @@ app.post('/signup', function(req, res, next){
       console.log(user, ' user')
       console.error('non existnt')
     } else {
-      console.log('its here')
+      console.log('its here');
     }
   })
   //.then(function(test){console.log(test)})
