@@ -100,7 +100,7 @@ app.get('/login', function(req, res, next){
 });
 
 app.post('/login', function(req, res, next){
-  res.render('test');
+  
 });
 
 app.get('/signup', function(req, res, next){
@@ -119,17 +119,21 @@ app.post('/signup', function(req, res, next){
   new User({username: username}).fetch()
     .then(function( user ){
     if (!user) {
-      //console.log(user, ' user')
       console.error('creating user')
       new User({username: username, password:password })
         .save()
         .then(function( newUser ){
         console.log(newUser, ' newUser')
-        session.name = username;
+        req.session.regenerate( ()=>{
+          req.session.name = username;
+        } );
+        res.redirect("/")
       });
     } else {
       console.log('its already here');
-      res.send('boy that username is taken')
+      // res.send('boy that username is taken');
+      //window.alert('username already exists, please log in')
+      res.redirect('/login')
     }
   })
   //.then(function(test){console.log(test)})
