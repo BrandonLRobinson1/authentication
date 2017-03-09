@@ -3,6 +3,9 @@ var util = require('./lib/utility');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
 
+// **
+var session = require('express-session')
+//**
 
 var db = require('./app/config');
 var Users = require('./app/collections/users');
@@ -22,12 +25,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
+app.use(session({
+  secret: "I am getting the hang of this",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true }
+}))
+
 // Starting Bcrypt session ************************************
 var bcrypt = require('bcrypt-nodejs');
 
 // console.log(bcrypt, ' daddy');
 // console.log(salt, ' zaddy')
 // ************************************
+
+console.log(session, ' session object')
+
 
 app.get('/', 
 function(req, res) {
@@ -101,25 +114,22 @@ app.post('/signup', function(req, res, next){
   let salt = bcrypt.genSaltSync(10);
   let hashedPW = bcrypt.hashSync(password, salt);
 
-  console.log(username, ' usanameee pawpyy')
-  console.log(hashedPW, ' hash brown daddy')
-
   //next up is how to store this information and verify in knex and bookshelf
 
-
-  // db.knex.schema.hasTable('Users').then(function(users){
-  //   console.log(users)
-  //   if (users) {
-  //     db.knex.schema
-  //   }
-  // })
-
-  new User({username: username}).fetch().then(function( user ){
+  new User({username: username}).fetch()
+    .then(function( user ){
     if (!user) {
-      console.log(user, ' user')
-      console.error('non existnt')
+      //console.log(user, ' user')
+      console.error('creating user')
+      new User({username: username, password:password })
+        .save()
+        .then(function( newUser ){
+        console.log(newUser, ' newUser')
+        session.name = username;
+      });
     } else {
-      console.log('its here');
+      console.log('its already here');
+      res.send('boy that username is taken')
     }
   })
   //.then(function(test){console.log(test)})
