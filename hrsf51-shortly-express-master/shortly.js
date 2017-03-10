@@ -143,8 +143,9 @@ app.get('/signup', function(req, res, next){
 app.post('/signup', function(req, res, next){
   let username = req.body.username;
   let password = req.body.password;
+
   let salt = bcrypt.genSaltSync(10);
-  let hashedPW = bcrypt.hashSync(password, salt);
+  //let hashedPW = bcrypt.hashSync(password, salt);
 
   //next up is how to store this information and verify in knex and bookshelf
 
@@ -152,15 +153,21 @@ app.post('/signup', function(req, res, next){
     .then(function( user ){
     if (!user) {
       console.error('creating user')
-      new User({username: username, password:password })
+
+      bcrypt.hash(password, null, null, function(err, hash) {
+        // Store hash in your password DB.
+        new User({username: username, password:hash })
         .save()
         .then(function( newUser ){
-        //console.log(newUser, ' newUser')
+        console.log(newUser, ' newUser')
         req.session.regenerate( ()=>{
           req.session.name = username;
         } );
         res.redirect("/")
       });
+      });
+
+      
     } else {
       console.log('its already here');
       res.redirect('/login')
