@@ -100,7 +100,39 @@ app.get('/login', function(req, res, next){
 });
 
 app.post('/login', function(req, res, next){
-  
+  let username = req.body.username;
+  let password = req.body.password;
+
+  new User({username: username}).fetch()
+    .then(function( user ){
+
+      console.log(user.get('username'), ' userrrrr', user.get('password'), ' userrrrr')
+      
+      if (!user) {
+        console.log('user doesnt exist')
+        res.send('quit makin shit up')
+        // res.redirect('/signup')
+      } else {
+
+      bcrypt.compare(password, user.get('password'), (err, match ) => {
+        console.log(err, ' err')
+
+        if (password !== user.get('password')){
+          res.send('ahh ahh ahh not without the password')
+        } else {
+          req.session.regenerate( ()=>{
+            req.session.name = username;
+          } );
+          res.redirect("/")
+        }
+
+      });
+
+   
+
+        
+      }
+})
 });
 
 app.get('/signup', function(req, res, next){
@@ -123,7 +155,7 @@ app.post('/signup', function(req, res, next){
       new User({username: username, password:password })
         .save()
         .then(function( newUser ){
-        console.log(newUser, ' newUser')
+        //console.log(newUser, ' newUser')
         req.session.regenerate( ()=>{
           req.session.name = username;
         } );
@@ -131,8 +163,6 @@ app.post('/signup', function(req, res, next){
       });
     } else {
       console.log('its already here');
-      // res.send('boy that username is taken');
-      //window.alert('username already exists, please log in')
       res.redirect('/login')
     }
   })
