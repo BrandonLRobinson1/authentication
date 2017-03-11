@@ -1,3 +1,49 @@
+
+//                                      .        `                                         
+//                                     `sy+++/+shoooooo+:.                                 
+//                                 `./osyyyyhyooy-../:-:+ys:.:-                            
+//                              .:ohmdysoo++oyyhNmhyd+.:ohdhmy-                            
+//                           `:+o/-ohyo+/////dMNmo.:. -NNy/-/hs`                           
+//                         -os/.`   `-:/+oooo+/-.     `yd++sdmMh-                          
+//                       .os-`         ``..----...```  `+syymNNmh-                         
+//                     `oy:       `o.-+syyyssso++++oo+o+:`.-::-.:d.                        
+//                    `sh.        `do````     `+oo++/::/syo-     oy                        
+//                    oy`          .`          `.--:/oyy+-oho.   -m.                       
+//                   .m.                               ``  -my.  .m.                       
+//                   -m`                                    -so  .N-                       
+//                   .m:                                         :d`                       
+//                    +h.                                        ss                        
+//                     /h-                                      .m.                        
+//                      -y+`                                   `so                         
+//                       `oy-`                                `o+                          
+//                         -ys-`                             -s-                           
+//                           .oy+.     `./s+               .o+`                            
+//                             .omh+oyhso+mm`           `:so.                              
+//                        .:+shdmdhssys+oodMho+////++++os+.                                
+//                   .:oyddyo/-.`        `oMhN+....``                                      
+//               `:oyhs+:``               +M+sm:                                           
+//              :dy/.`                    /M/`+do`                                         
+//             /m+`                       .No  .yy.                                        
+//           `om:                          hd`  `od+`                                      
+//           +d-                           :N/    -hh-                                     
+//          /d-                            `hd`    `+ds.                                   
+//         oh-                              -my      .+ys:.                                
+//       `+y.                                +N/       `:oyyo:.`                           
+//      -yd.                                 .Nd`         `./syyo+:.`                      
+//    `+mMNyo/.                               sM/             `.-/oyyyo:.`                 
+//   :dNymd//sd+`                             .md`                 ``-/sydy/.              
+//  /mhm.sh` `:h/                              oMo                      -mmNm+`            
+// `do:N/.yy/`                                 .mN-                     sh-mdm/            
+// .m- /y.`:y/                                  /Ny`                    o+.m/ys            
+// `:`  `                                       `hN:                      `:`::            
+//                                               .o/                                       
+                    //  _     _ _                  ____                
+                    // | |   (_) | _____    __ _  | __ )  ___  ___ ___ 
+                    // | |   | | |/ / _ \  / _` | |  _ \ / _ \/ __/ __|
+                    // | |___| |   <  __/ | (_| | | |_) | (_) \__ \__ \
+                    // |_____|_|_|\_\___|  \__,_| |____/ \___/|___/___/
+                                                        
+
 var express = require('express');
 var util = require('./lib/utility');
 var partials = require('express-partials');
@@ -72,7 +118,7 @@ function(req, res) {
 app.get('/links', 
 function(req, res) {
   Links.reset().fetch().then(function(links) {
-    res.status(200).send(links.models);
+    res.status(200).send(links.models); 
   });
 });
 
@@ -190,6 +236,7 @@ app.get('/logout', function(req, res, next){
 });
 
 app.post('/logout', function(req, res, next){
+  console.log(req.session, ' logout before destroy')
   req.session.destroy(function() {
     console.log(req.session, ' deleted session')
     res.redirect('/login');

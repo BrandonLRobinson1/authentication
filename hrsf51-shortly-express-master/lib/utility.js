@@ -29,7 +29,7 @@ exports.checkUserSession = function(req, res, next){
   console.log(req.session, ' session test before middleware runs')
   // req.session.name = user.get('username')
   console.log(req.session.name, ' testycalls')
-  if (req.session) {
+  if (req.session !== undefined) {
 
        //if (!!req.session.name){ // why the double bang
         next();
