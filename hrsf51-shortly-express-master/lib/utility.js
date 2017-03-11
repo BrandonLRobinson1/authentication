@@ -24,4 +24,30 @@ exports.isValidUrl = function(url) {
 // Add additional utility functions below
 /************************************************************/
 
+//checking session before its created *******
+exports.checkUserSession = function(req, res, next){
+  console.log(req.session, ' session test before middleware runs')
+  // req.session.name = user.get('username')
+  console.log(req.session.name, ' testycalls')
+  if (req.session) {
+
+       //if (!!req.session.name){ // why the double bang
+        next();
+      // } else {
+      //   console.log(req.session, ' session test after middleware runs')
+      //   res.send('hmm222')
+      // }
+    //console.log(req.session, ' session test after middleware runs')
+    // next();
+  }
+   else {
+    req.session.error = 'Access denied!';
+    //req.session.name = ""
+    console.log(req.session, ' session test after middleware runs')
+    res.render('/login')
+    //res.redirect('/login');
+  }
+
+}
+
 

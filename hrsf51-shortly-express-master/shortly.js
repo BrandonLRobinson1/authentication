@@ -39,15 +39,32 @@ var bcrypt = require('bcrypt-nodejs');
 // console.log(salt, ' zaddy')
 // ************************************
 
-console.log(session, ' session object')
 
 
-app.get('/', 
+
+//app.use(util.checkUserSession);
+
+//tester*********************************
+// app.get('/', function(req, res, next) {
+//   var sess = req.session
+//   if (sess) {
+//     sess.views++
+//     res.setHeader('Content-Type', 'text/html')
+//     res.write('<p>views: ' + sess.views + '</p>')
+//     res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>')
+//     res.end()
+//   } else {
+//     sess.views = 1
+//     res.end('welcome to the session demo. refresh!')
+//   }
+// })
+
+app.get('/', util.checkUserSession,
 function(req, res) {
   res.render('index');
 });
 
-app.get('/create', 
+app.get('/create', util.checkUserSession,
 function(req, res) {
   res.render('index');
 });
@@ -59,7 +76,7 @@ function(req, res) {
   });
 });
 
-app.post('/links', 
+app.post('/links', util.checkUserSession,
 function(req, res) {
   var uri = req.body.url;
 
@@ -105,8 +122,6 @@ app.post('/login', function(req, res, next){
 
   new User({username: username}).fetch()
     .then(function( user ){
-
-      console.log(user.get('username'), ' userrrrr', user.get('password'), ' userrrrr')
       
       if (!user) {
         console.log('user doesnt exist')
@@ -115,21 +130,18 @@ app.post('/login', function(req, res, next){
       } else {
 
       bcrypt.compare(password, user.get('password'), (err, match ) => {
-        console.log(err, ' err')
-
-        if (password !== user.get('password')){
+        // console.log(err, ' err')
+        if (!match){
           res.send('ahh ahh ahh not without the password')
         } else {
-          req.session.regenerate( ()=>{
+          req.session.regenerate( function(){
             req.session.name = username;
+            console.log(req.session.name, ' req session name for log in xx')
+            res.redirect("/")
           } );
-          res.redirect("/")
         }
 
       });
-
-   
-
         
       }
 })
@@ -144,7 +156,7 @@ app.post('/signup', function(req, res, next){
   let username = req.body.username;
   let password = req.body.password;
 
-  let salt = bcrypt.genSaltSync(10);
+  //let salt = bcrypt.genSaltSync(10);
   //let hashedPW = bcrypt.hashSync(password, salt);
 
   //next up is how to store this information and verify in knex and bookshelf
@@ -153,28 +165,35 @@ app.post('/signup', function(req, res, next){
     .then(function( user ){
     if (!user) {
       console.error('creating user')
-
       bcrypt.hash(password, null, null, function(err, hash) {
         // Store hash in your password DB.
         new User({username: username, password:hash })
         .save()
         .then(function( newUser ){
-        console.log(newUser, ' newUser')
-        req.session.regenerate( ()=>{
+          req.session.regenerate( function() {
           req.session.name = username;
+          console.log(req.session, ' req session name for new user xx')
+          res.redirect("/")
         } );
-        res.redirect("/")
+        
       });
       });
-
-      
     } else {
       console.log('its already here');
       res.redirect('/login')
     }
   })
-  //.then(function(test){console.log(test)})
-  // res.send('jo')
+});
+
+app.get('/logout', function(req, res, next){
+  res.render('logout');
+});
+
+app.post('/logout', function(req, res, next){
+  req.session.destroy(function() {
+    console.log(req.session, ' deleted session')
+    res.redirect('/login');
+});
 });
 
 /************************************************************/
