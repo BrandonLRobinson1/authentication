@@ -118,7 +118,7 @@ function(req, res) {
 app.get('/links', 
 function(req, res) {
   Links.reset().fetch().then(function(links) {
-    res.status(200).send(links.models); 
+    res.status(200).send(links.models);
   });
 });
 
