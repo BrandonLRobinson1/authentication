@@ -75,7 +75,9 @@ app.use(session({
   secret: "I am getting the hang of this",
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000
+  // cookie: { secure: true } //why does this mess up my auth?????
 }))
 
 // Starting Bcrypt session ************************************
@@ -182,7 +184,8 @@ app.post('/login', function(req, res, next){
         } else {
           req.session.regenerate( function(){
             req.session.name = username;
-            console.log(req.session.name, ' req session name for log in xx')
+            //console.log(req.session.name, ' req session name for log in xx')
+            console.log('log in successful, sending to root and session name is: ', req.session.name)
             res.redirect("/")
           } );
         }

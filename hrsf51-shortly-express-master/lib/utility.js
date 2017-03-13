@@ -29,7 +29,7 @@ exports.checkUserSession = function(req, res, next){
   console.log(req.session, ' session test before middleware runs')
   // req.session.name = user.get('username')
   console.log(req.session.name, ' testycalls')
-  if (req.session !== undefined) {
+  if (req.session.name) {
 
        //if (!!req.session.name){ // why the double bang
         next();
@@ -44,8 +44,9 @@ exports.checkUserSession = function(req, res, next){
     req.session.error = 'Access denied!';
     //req.session.name = ""
     console.log(req.session, ' session test after middleware runs')
-    res.render('/login')
-    //res.redirect('/login');
+    res.send('boiii')
+    // res.render('../views/login')
+    // res.redirect('/login');
   }
 
 }
