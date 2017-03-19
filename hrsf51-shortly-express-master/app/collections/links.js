@@ -5,4 +5,6 @@ var Links = new db.Collection();
 
 Links.model = Link;
 
+// console.log(Links);
+
 module.exports = Links;
