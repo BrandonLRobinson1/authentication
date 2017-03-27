@@ -37,11 +37,11 @@
 // .m- /y.`:y/                                  /Ny`                    o+.m/ys            
 // `:`  `                                       `hN:                      `:`::            
 //                                               .o/                                       
-                    //  _     _ _                  ____                
-                    // | |   (_) | _____    __ _  | __ )  ___  ___ ___ 
-                    // | |   | | |/ / _ \  / _` | |  _ \ / _ \/ __/ __|
-                    // | |___| |   <  __/ | (_| | | |_) | (_) \__ \__ \
-                    // |_____|_|_|\_\___|  \__,_| |____/ \___/|___/___/ 
+//                      _     _ _                  ____                
+//                     | |   (_) | _____    __ _  | __ )  ___  ___ ___ 
+//                     | |   | | |/ / _ \  / _` | |  _ \ / _ \/ __/ __|
+//                     | |___| |   <  __/ | (_| | | |_) | (_) \__ \__ \
+//                     |_____|_|_|\_\___|  \__,_| |____/ \___/|___/___/ 
                                                         
 
 var express = require('express');
@@ -50,7 +50,7 @@ var partials = require('express-partials');
 var bodyParser = require('body-parser');
 
 // **
-var session = require('express-session')
+var session = require('express-session');
 //**
 
 var db = require('./app/config');
