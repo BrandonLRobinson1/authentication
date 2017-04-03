@@ -124,7 +124,7 @@ function(req, res) {
   });
 });
 
-app.post('/links', util.checkUserSession, 
+app.post('/links', util.checkUserSession,
 function(req, res) {
   var uri = req.body.url;
 
