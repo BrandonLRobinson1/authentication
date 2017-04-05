@@ -88,8 +88,6 @@ var bcrypt = require('bcrypt-nodejs');
 // ************************************
 
 
-
-
 //app.use(util.checkUserSession);
 
 //tester*********************************
