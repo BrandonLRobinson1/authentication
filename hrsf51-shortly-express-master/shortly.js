@@ -91,6 +91,7 @@ var bcrypt = require('bcrypt-nodejs');
 //app.use(util.checkUserSession);
 
 //tester*********************************
+
 // app.get('/', function(req, res, next) {
 //   var sess = req.session
 //   if (sess) {
