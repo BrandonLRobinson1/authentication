@@ -78,7 +78,7 @@ app.use(session({
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
   // cookie: { secure: true } //why does this mess up my auth?????
-}))
+}));
 
 // Starting Bcrypt session ************************************
 var bcrypt = require('bcrypt-nodejs');
