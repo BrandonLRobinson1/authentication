@@ -221,7 +221,7 @@ app.post('/signup', function(req, res, next){
           req.session.regenerate( function() {
           req.session.name = username;
           console.log(req.session, ' req session name for new user xx')
-          res.redirect("/")
+          res.redirect("/");
         } );
         
       });
