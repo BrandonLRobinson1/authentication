@@ -257,7 +257,7 @@ app.get('/*', function(req, res) {
       res.redirect('/');
     } else {
       var click = new Click({
-        linkId: link.get('id')
+        linkId: link.get('id');
       });
 
       click.save().then(function() {
